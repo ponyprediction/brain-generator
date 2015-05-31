@@ -16,10 +16,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    util.cpp
+    util.cpp \
+    brain-generator.cpp
 
 HEADERS += \
-    util.hpp
+    util.hpp \
+    brain-generator.hpp
 
 DISTFILES += \
     conf.xml

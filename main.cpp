@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     {
         command = Util::getLineFromConf("command");
     }
+    // Go
+    BrainGenerator::generate(command);
     // The end
     return 0;
 }
