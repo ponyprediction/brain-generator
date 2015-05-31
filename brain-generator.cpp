@@ -4,5 +4,11 @@
 
 void BrainGenerator::generate(const QString &command)
 {
-    Util::write("Treating " + command);
+    // Init
+    bool ok = true;
+    //
+    if(ok)
+    {
+
+    }
 }
