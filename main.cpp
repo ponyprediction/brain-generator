@@ -1,8 +1,13 @@
+#include "util.hpp"
 #include <QCoreApplication>
+
 
 int main(int argc, char *argv[])
 {
+    // Init
     QCoreApplication a(argc, argv);
+    Util::init();
 
-    return a.exec();
+    // The end
+    return 0;
 }
