@@ -9,12 +9,14 @@ class BrainGenerator
 
 public:
 
-    enum ConnectionOrganisation{EVERY, GROUP};
-    enum WeightOrganisation{UNIQUE, SHARED};
-    enum OutType{UNIQUEID, PERCENTS};
+
 
     struct Layer
     {
+        enum ConnectionOrganisation{EVERY, GROUP};
+        enum WeightOrganisation{UNIQUE, SHARED};
+        enum OutType{UNIQUEID, PERCENTS};
+
         int neuronCount;
         ConnectionOrganisation connectionOrganisation;
         int connectionNumber;
@@ -23,6 +25,8 @@ public:
     };
 
     static void generate(const QString & command);
+
+    static void writeErrorParsing(const QStringList & args, const int & i);
 
 };
 
