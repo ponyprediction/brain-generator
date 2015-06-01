@@ -13,4 +13,7 @@
     <errorEnabled>              1   </errorEnabled>
     <errorOverwriteEnabled>     1   </errorOverwriteEnabled>
 
+    <pathToPonyPrediction>pathToPonyPrediction</pathToPonyPrediction>
+    <brainFilename>pathToPonyPrediction/brains/NAME.brain</brainFilename>
+
 </conf>
