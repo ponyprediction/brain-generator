@@ -36,7 +36,7 @@ class Util {
 public:
 
     static void init();
-    static QString getLineFromConf(const QString & id);
+    static QString getLineFromConf(const QString & id, bool * ok = nullptr);
     static void showFile(const QString & path);
     static bool createDir(const QString & path);
 

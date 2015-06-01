@@ -19,20 +19,50 @@ bool Util::isOverwriting = false;
 
 void Util::init()
 {
-    writeEnabled = getLineFromConf("writeEnabled").toInt();
-    overwriteEnabled = getLineFromConf("overwriteEnabled").toInt();
-    successEnabled = getLineFromConf("successEnabled").toInt();
-    successOverwriteEnabled = getLineFromConf(
-                "successOverwriteEnabled").toInt();
-    warningsEnabled = getLineFromConf("warningsEnabled").toInt();
-    warningOverwriteEnabled = getLineFromConf(
-                "warningOverwriteEnabled").toInt();
-    errorEnabled = getLineFromConf("errorEnabled").toInt();
-    errorOverwriteEnabled = getLineFromConf("errorOverwriteEnabled").toInt();
+    //
+    bool ok = true;
+    QStringList paths;
+    //
+    if(ok)
+    {
+        writeEnabled = getLineFromConf("writeEnabled").toInt();
+        overwriteEnabled = getLineFromConf("overwriteEnabled").toInt();
+        successEnabled = getLineFromConf("successEnabled").toInt();
+        successOverwriteEnabled = getLineFromConf(
+                    "successOverwriteEnabled").toInt();
+        warningsEnabled = getLineFromConf("warningsEnabled").toInt();
+        warningOverwriteEnabled = getLineFromConf(
+                    "warningOverwriteEnabled").toInt();
+        errorEnabled = getLineFromConf("errorEnabled").toInt();
+        errorOverwriteEnabled = getLineFromConf("errorOverwriteEnabled").toInt();
+    }
+    //
+    if(ok)
+    {
+        paths << Util::getLineFromConf("pathToPonyPrediction", &ok) + "/brains";
+    }
+    //
+    if(ok)
+    {
+        foreach(QString path, paths)
+        {
+            if(!Util::createDir(path))
+            {
+                ok = false;
+                Util::writeError("cannot create " + path);
+                break;
+            }
+        }
+    }
+    //
+    if(!ok)
+    {
+        throw std::runtime_error("Could not properly initialize the program.");
+    }
 }
 
 
-QString Util::getLineFromConf(const QString & id)
+QString Util::getLineFromConf(const QString & id, bool * ok)
 {
     QString output = "";
     QFile file("./conf.xml");
@@ -43,7 +73,8 @@ QString Util::getLineFromConf(const QString & id)
         return QString();
     }
     QXmlStreamReader xml(&file);
-    while (!xml.atEnd()) {
+    while (!xml.atEnd())
+    {
         QXmlStreamReader::TokenType token = xml.readNext();
         if(token == QXmlStreamReader::StartElement)
         {
@@ -55,6 +86,7 @@ QString Util::getLineFromConf(const QString & id)
     }
     if(!output.size())
     {
+        *ok = false;
         Util::writeError("can not find config line <" + id + ">");
     }
     return output;
