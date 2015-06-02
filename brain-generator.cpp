@@ -19,21 +19,23 @@ void BrainGenerator::generate(const QString &command)
     brain["ratio"] = 0.0;
     int inputCount = 0;
     QVector<Layer> layers;
+    QVector<Neuron> neurons;
+    OutType outType;
+    // Define the difereent accepted commands
+    QStringList acceptedArgs;
+    enum AcceptedArg{EVERY=0, IN, GROUP, LAYER, OUT,
+                     PERCENTS, SHARED, UNIQUE, UNIQUEID};
+    acceptedArgs << "every" << "in" << "group" << "layer" << "out"
+                 << "percents" << "shared" << "unique" << "uniqueid" ;
+    // Define the different states
+    enum class State{IN, LAYER, CONNECTION, WEIGHTS, LAYER_OR_OUT,
+                     OUT, OUT_TYPE, DONE};
+    State state = State::IN;
     // Parsing command
     if(ok)
     {
         QStringList args = command.split(' ');
         Layer currentLayer;
-        // Define the difereent accepted commands
-        QStringList acceptedArgs;
-        enum AcceptedArg{EVERY=0, IN, GROUP, LAYER, OUT,
-                         PERCENTS, SHARED, UNIQUE, UNIQUEID};
-        acceptedArgs << "every" << "in" << "group" << "layer" << "out"
-                     << "percents" << "shared" << "unique" << "uniqueid" ;
-        // Define the different states
-        enum class State{IN, LAYER, CONNECTION, WEIGHTS, LAYER_OR_OUT,
-                         OUT, OUT_TYPE, DONE};
-        State state = State::IN;
         // Parsing
         for(int i = 0 ; i < args.size() ; i++)
         {
@@ -167,12 +169,13 @@ void BrainGenerator::generate(const QString &command)
                     {
                         if(args[i] == acceptedArgs[UNIQUEID] )
                         {
-                            currentLayer.outType = Layer::UNIQUEID;
+                            outType = OutType::UNIQUEID;
                         }
                         else if(args[i] == acceptedArgs[PERCENTS])
                         {
-                            currentLayer.outType = Layer::PERCENTS;
+                            outType = OutType::PERCENTS;
                         }
+                        brain["outType"] = args[i];
                         state = State::DONE;
                     }
                     else
@@ -199,6 +202,44 @@ void BrainGenerator::generate(const QString &command)
         }
     }
     //
+    /*
+<ratio>0.21844</ratio>
+    <neuronCount>60</neuronCount>
+    <inputCount>80</inputCount>
+    <outputCount>20</outputCount>
+    <weightCount>804</weightCount>
+<weights></weights>
+    <neurons>
+        <neuron>
+            <externalInputIds>0;1;2;3</externalInputIds>
+            <neuronalInputIds></neuronalInputIds>
+            <brainalInputIds></brainalInputIds>
+            <weightIds>0;1;2;3</weightIds>
+        </neuron>
+
+        */
+    if(ok)
+    {
+        // neuronCount
+        int neuronCount = 0;
+        for(int i = 0 ; i < layers.size() ; i++)
+        {
+            neuronCount += layers[i].neuronCount;
+        }
+        brain["neuronCount"] = neuronCount;
+        // inputCount
+        brain["inputCount"] = inputCount;
+        // outputCount
+        brain["outputCount"] = layers.last().neuronCount;
+        // command
+        brain["command"] = command;
+    }
+    //
+    if(ok)
+    {
+        // add neurons + weights
+    }
+    //
     if(ok)
     {
         filename = Util::getLineFromConf("brainFilename", &ok);
@@ -221,6 +262,11 @@ void BrainGenerator::generate(const QString &command)
         QJsonDocument document;
         document.setObject(brain);
         file.write(document.toJson());
+    }
+    if(ok)
+    {
+        Util::writeSuccess("Brain ready at "
+                           + QFileInfo(file).absoluteFilePath());
     }
 }
 
