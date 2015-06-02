@@ -19,11 +19,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     util.cpp \
-    brain-generator.cpp
+    brain-generator.cpp \
+    layer.cpp
 
 HEADERS += \
     util.hpp \
-    brain-generator.hpp
+    brain-generator.hpp \
+    layer.hpp
 
 DISTFILES += \
     conf.xml

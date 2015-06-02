@@ -1,4 +1,5 @@
 #include "brain-generator.hpp"
+#include "layer.hpp"
 #include "util.hpp"
 #include <QJsonObject>
 #include <QFileInfo>
@@ -218,7 +219,6 @@ void BrainGenerator::generate(const QString &command)
     if(ok)
     {
         QJsonDocument document;
-
         document.setObject(brain);
         file.write(document.toJson());
     }
