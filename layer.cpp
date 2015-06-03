@@ -21,7 +21,11 @@ void Layer::getNeurons()
 {
     for(int i = 0 ; i < neuronCount ; i++)
     {
-        neurons[i].debugIExternals();
+        neurons[i].debugExternals();
+    }
+    for(int i = 0 ; i < neuronCount ; i++)
+    {
+        neurons[i].debugInternals();
     }
     for(int i = 0 ; i < neuronCount ; i++)
     {
@@ -71,13 +75,14 @@ void Layer::setExternalInputs()
     {
         case GROUP:
         {
-            int firstExternalId = 0;
-            int externalIdPerNeuron = connectionNumber;
+            int first = 0;
+            int step = 1;
+            int last = first + connectionNumber -1;
             for(int i = 0 ; i < neuronCount ; i++)
             {
-                neurons[i].addExternalInputs(firstExternalId,
-                                             externalIdPerNeuron);
-                firstExternalId += externalIdPerNeuron;
+                neurons[i].addExternalInputs(first, step,last);
+                first += connectionNumber;
+                last += connectionNumber;
             }
             break;
         }
@@ -85,11 +90,10 @@ void Layer::setExternalInputs()
         {
             for(int i = 0 ; i < neuronCount ; i++)
             {
-                int firstExternal = i % connectionNumber;
+                int first = i % connectionNumber;
                 int step = connectionNumber;
-                int lastExternal = inputCount-1;
-                neurons[i].addExternalInputs(firstExternal, step,
-                                             lastExternal);
+                int last = inputCount-1;
+                neurons[i].addExternalInputs(first, step, last);
             }
             break;
         }
@@ -97,18 +101,32 @@ void Layer::setExternalInputs()
 }
 
 
-void Layer::setInternalInputs()
+void Layer::setInternalInputs(int & neuronId)
 {
     switch (connectionOrganisation)
     {
         case GROUP:
         {
-
+            int first = neuronId;
+            int step = 1;
+            int last = first + connectionNumber -1;
+            for(int i = 0 ; i < neuronCount ; i++)
+            {
+                neurons[i].addInternalInputs(first, step,last);
+                first += connectionNumber;
+                last += connectionNumber;
+            }
             break;
         }
         case EVERY:
         {
-
+            for(int i = 0 ; i < neuronCount ; i++)
+            {
+                int first = neuronId + i % connectionNumber;
+                int step = connectionNumber;
+                int last = first + inputCount - 1;
+                neurons[i].addInternalInputs(first, step, last);
+            }
             break;
         }
     }

@@ -20,7 +20,7 @@ public:
 
     void setExternalInputs();
 
-    void setInternalInputs();
+    void setInternalInputs(int & neuronId);
 
     void getNeurons();
 

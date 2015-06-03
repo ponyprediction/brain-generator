@@ -15,19 +15,22 @@ public:
                     const int & weightCount);
 
     void addExternalInputs(const int & firstExternal,
-                           const int & externalCount);
-
-    void addExternalInputs(const int & firstExternal,
                            const int & step,
                            const int & lastExternal);
 
+    void addInternalInputs(const int & first,
+                           const int & step,
+                           const int & last);
+
     void debugWeigths();
-    void debugIExternals();
+    void debugExternals();
+    void debugInternals();
 
 private:
 
     QVector<int> externalInputsId;
     QVector<int> weightIds;
+    QVector<int> internalInputsId;
 
 };
 

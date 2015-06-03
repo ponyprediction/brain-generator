@@ -241,8 +241,8 @@ void BrainGenerator::generate(const QString &command)
     if(ok)
     {
         // add neurons + weights
-
         int weightId = 0;
+        int neuronId = 0;
         for(int i = 0 ; i < layers.size() ; i++)
         {
             layers[i].init();
@@ -253,9 +253,9 @@ void BrainGenerator::generate(const QString &command)
             }
             else
             {
-                layers[i].setInternalInputs();
+                layers[i].setInternalInputs(neuronId);
+                neuronId += layers[i-1].neuronCount;
             }
-
             Util::write("#" + QString::number(i));
             layers[i].getNeurons();
         }
