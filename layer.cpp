@@ -4,66 +4,37 @@
 #include <QVector>
 
 
-Layer::Layer() :
-    Layer(0)
+Layer::Layer()
 {
-
 }
 
-
-Layer::Layer(const int & id) :
-    id(id)
+void Layer::init()
 {
-
-}
-
-
-void Layer::getNeurons(int & weightId)
-{
-    // Init
-    Util::write("#" + QString::number(id));
-    QVector<Neuron> neurons;
-    int weightPerNeuron = 0;
     for(int i = 0 ; i < neuronCount ; i++)
     {
         neurons.append(Neuron());
     }
+}
+
+
+void Layer::getNeurons()
+{
+    for(int i = 0 ; i < neuronCount ; i++)
+    {
+        neurons[i].debugIExternals();
+    }
+    for(int i = 0 ; i < neuronCount ; i++)
+    {
+        neurons[i].debugWeigths();
+    }
+}
+
+
+void Layer::setWeights(int & weightId)
+{
     //
-    if(!id) // first layer
-    {
-        switch (connectionOrganisation)
-        {
-            case GROUP:
-            {
-                int firstExternalId = 0;
-                int externalIdPerNeuron = connectionNumber;
-                for(int i = 0 ; i < neuronCount ; i++)
-                {
-                    neurons[i].addExternalInputs(firstExternalId,
-                                                 externalIdPerNeuron);
-                    firstExternalId += externalIdPerNeuron;
-                }
-                break;
-            }
-            case EVERY:
-            {
-                for(int i = 0 ; i < neuronCount ; i++)
-                {
-                    int firstExternal = i % connectionNumber;
-                    int step = connectionNumber;
-                    int lastExternal = inputCount-1;
-                    neurons[i].addExternalInputs(firstExternal, step,
-                                                 lastExternal);
-                    //externalId += externalIdPerNeuron;
-                }
-                break;
-            }
-        }
-    }
-    else
-    {
-    }
-    // Weights
+    int weightPerNeuron = 0;
+    //
     for(int i = 0 ; i < neuronCount ; i++)
     {
         switch (weightOrganisation)
@@ -90,10 +61,55 @@ void Layer::getNeurons(int & weightId)
         neurons[i].addWeights(weightId, weightPerNeuron);
         weightId += weightPerNeuron;
     }
-    //
-    for(int i = 0 ; i < neuronCount ; i++)
+}
+
+
+void Layer::setExternalInputs()
+{
+    // First layer
+    switch (connectionOrganisation)
     {
-        neurons[i].debug();
+        case GROUP:
+        {
+            int firstExternalId = 0;
+            int externalIdPerNeuron = connectionNumber;
+            for(int i = 0 ; i < neuronCount ; i++)
+            {
+                neurons[i].addExternalInputs(firstExternalId,
+                                             externalIdPerNeuron);
+                firstExternalId += externalIdPerNeuron;
+            }
+            break;
+        }
+        case EVERY:
+        {
+            for(int i = 0 ; i < neuronCount ; i++)
+            {
+                int firstExternal = i % connectionNumber;
+                int step = connectionNumber;
+                int lastExternal = inputCount-1;
+                neurons[i].addExternalInputs(firstExternal, step,
+                                             lastExternal);
+            }
+            break;
+        }
     }
 }
 
+
+void Layer::setInternalInputs()
+{
+    switch (connectionOrganisation)
+    {
+        case GROUP:
+        {
+
+            break;
+        }
+        case EVERY:
+        {
+
+            break;
+        }
+    }
+}

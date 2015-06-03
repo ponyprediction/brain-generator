@@ -21,7 +21,8 @@ public:
                            const int & step,
                            const int & lastExternal);
 
-    void debug();
+    void debugWeigths();
+    void debugIExternals();
 
 private:
 

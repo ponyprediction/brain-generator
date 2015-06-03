@@ -16,6 +16,7 @@ void Neuron::addWeights(const int & firstWeight, const int & weightCount)
     }
 }
 
+
 void Neuron::addExternalInputs(const int & firstExternal,
                                const int & externalCount)
 {
@@ -24,6 +25,7 @@ void Neuron::addExternalInputs(const int & firstExternal,
         externalInputsId.append(i);
     }
 }
+
 
 void Neuron::addExternalInputs(const int & firstExternal,
                                const int & step,
@@ -35,9 +37,14 @@ void Neuron::addExternalInputs(const int & firstExternal,
     }
 }
 
-void Neuron::debug()
+
+void Neuron::debugWeigths()
 {
-    qDebug() << "externalInputsId"<< externalInputsId;
     qDebug() << "weightIds"<< weightIds;
 }
 
+
+void Neuron::debugIExternals()
+{
+    qDebug() << "externalInputsId"<< externalInputsId;
+}

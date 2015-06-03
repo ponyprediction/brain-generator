@@ -1,6 +1,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 
+#include "neuron.hpp"
+#include <QVector>
 
 class Layer
 {
@@ -11,9 +13,16 @@ public:
     enum WeightOrganisation{UNIQUE, SHARED};
 
     Layer();
-    Layer(const int & id);
 
-    void getNeurons(int & weightId);
+    void init();
+
+    void setWeights(int & weightId);
+
+    void setExternalInputs();
+
+    void setInternalInputs();
+
+    void getNeurons();
 
     int neuronCount;
     ConnectionOrganisation connectionOrganisation;
@@ -23,7 +32,7 @@ public:
 
 private:
 
-    int id;
+    QVector<Neuron> neurons;
 
 };
 
