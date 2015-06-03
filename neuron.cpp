@@ -38,19 +38,40 @@ void Neuron::addInternalInputs(const int & first,
 }
 
 
-void Neuron::debugWeigths()
+QString Neuron::getNeuronals()
 {
-    qDebug() << "weightIds"<< weightIds;
+    QString tmp = "";
+    for(int i = 0 ; i < internalInputsId.size() ; i++)
+    {
+        if(i)
+            tmp += ";";
+        tmp += QString::number(internalInputsId[i]);
+    }
+    return tmp;
 }
 
 
-void Neuron::debugExternals()
+QString Neuron::getExternals()
 {
-    qDebug() << "externalInputsId"<< externalInputsId;
+    QString tmp = "";
+    for(int i = 0 ; i < externalInputsId.size() ; i++)
+    {
+        if(i)
+            tmp += ";";
+        tmp += QString::number(externalInputsId[i]);
+    }
+    return tmp;
 }
 
 
-void Neuron::debugInternals()
+QString Neuron::getWeights()
 {
-    qDebug() << "internalInputsId"<< internalInputsId;
+    QString tmp = "";
+    for(int i = 0 ; i < weightIds.size() ; i++)
+    {
+        if(i)
+            tmp += ";";
+        tmp += QString::number(weightIds[i]);
+    }
+    return tmp;
 }

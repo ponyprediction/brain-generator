@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QFileInfo>
 #include <QJsonDocument>
+#include <QJsonArray>
 #include <QStringList>
 #include <QDebug>
 #include <vector>
@@ -20,7 +21,6 @@ void BrainGenerator::generate(const QString &command)
     brain["ratio"] = 0.0;
     int inputCount = 0;
     QVector<Layer> layers;
-    QVector<Neuron> neurons;
     OutType outType;
     // Define the difereent accepted commands
     QStringList acceptedArgs;
@@ -237,10 +237,9 @@ void BrainGenerator::generate(const QString &command)
         // command
         brain["command"] = command;
     }
-    //
+    // Prepare neurons
     if(ok)
     {
-        // add neurons + weights
         int weightId = 0;
         int neuronId = 0;
         for(int i = 0 ; i < layers.size() ; i++)
@@ -256,9 +255,20 @@ void BrainGenerator::generate(const QString &command)
                 layers[i].setInternalInputs(neuronId);
                 neuronId += layers[i-1].neuronCount;
             }
-            Util::write("#" + QString::number(i));
-            layers[i].getNeurons();
         }
+    }
+    // Add neurons
+    if(ok)
+    {
+        QJsonArray neurons;
+        for(int i = 0 ; i < layers.size() ; i++)
+        {
+            for(int j = 0 ; j < layers[i].neuronCount ; j++)
+            {
+                neurons << layers[i].getNeurons(j);
+            }
+        }
+        brain["neurons"] = neurons;
     }
     //
     if(ok)

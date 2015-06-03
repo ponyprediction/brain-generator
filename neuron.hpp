@@ -22,9 +22,9 @@ public:
                            const int & step,
                            const int & last);
 
-    void debugWeigths();
-    void debugExternals();
-    void debugInternals();
+    QString getNeuronals();
+    QString getExternals();
+    QString getWeights();
 
 private:
 

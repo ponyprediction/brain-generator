@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <conf>
 
-    <command>in 80 layer 20 group 4 shared layer 10 every 1 unique layer 20 every 1 unique out uniqueid</command>
-    <command>help</command>
+    <command>in 80 layer 20 group 4 shared layer 20 every 1 unique layer 20 every 1 unique out uniqueid</command>
 
     <writeEnabled>              1   </writeEnabled>
     <overwriteEnabled>          1   </overwriteEnabled>

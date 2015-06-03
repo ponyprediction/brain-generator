@@ -1,7 +1,10 @@
 #include "layer.hpp"
 #include "neuron.hpp"
 #include "util.hpp"
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QVector>
+#include <QDebug>
 
 
 Layer::Layer()
@@ -17,20 +20,14 @@ void Layer::init()
 }
 
 
-void Layer::getNeurons()
+QJsonObject Layer::getNeurons(int id)
 {
-    for(int i = 0 ; i < neuronCount ; i++)
-    {
-        neurons[i].debugExternals();
-    }
-    for(int i = 0 ; i < neuronCount ; i++)
-    {
-        neurons[i].debugInternals();
-    }
-    for(int i = 0 ; i < neuronCount ; i++)
-    {
-        neurons[i].debugWeigths();
-    }
+    QJsonObject neuron;
+    neuron["externalInputIds"] = neurons[id].getExternals();
+    neuron["neuronalInputIds"] = neurons[id].getNeuronals();
+    neuron["brainalInputIds"] = "";
+    neuron["weightIds"] = neurons[id].getWeights();
+    return neuron;
 }
 
 

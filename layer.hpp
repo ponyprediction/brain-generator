@@ -2,6 +2,7 @@
 #define LAYER_H
 
 #include "neuron.hpp"
+#include <QJsonObject>
 #include <QVector>
 
 class Layer
@@ -22,7 +23,7 @@ public:
 
     void setInternalInputs(int & neuronId);
 
-    void getNeurons();
+    QJsonObject getNeurons(int id);
 
     int neuronCount;
     ConnectionOrganisation connectionOrganisation;
