@@ -11,6 +11,7 @@ public:
     enum WeightOrganisation{UNIQUE, SHARED};
 
     Layer();
+    Layer(const int & id);
 
     void getNeurons(int & weightId);
 
@@ -19,6 +20,10 @@ public:
     int connectionNumber;
     WeightOrganisation weightOrganisation;
     int inputCount;
+
+private:
+
+    int id;
 
 };
 

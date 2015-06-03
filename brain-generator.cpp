@@ -36,7 +36,7 @@ void BrainGenerator::generate(const QString &command)
     if(ok)
     {
         QStringList args = command.split(' ');
-        Layer currentLayer;
+        Layer currentLayer(0);
         // Parsing
         for(int i = 0 ; i < args.size() ; i++)
         {
@@ -69,7 +69,7 @@ void BrainGenerator::generate(const QString &command)
                     if(args[i] == acceptedArgs[LAYER])
                     {
                         i++;
-                        currentLayer = Layer();
+                        currentLayer = Layer(layers.size());
                         currentLayer.neuronCount = args[i].toInt(&ok);
                         currentLayer.inputCount = inputCount;
                         if(!ok)
@@ -144,7 +144,7 @@ void BrainGenerator::generate(const QString &command)
                     if(args[i] == acceptedArgs[LAYER])
                     {
                         i++;
-                        currentLayer = Layer();
+                        currentLayer = Layer(layers.size());
                         currentLayer.neuronCount = args[i].toInt(&ok);
                         currentLayer.inputCount = layers.last().neuronCount;
                         if(!ok)

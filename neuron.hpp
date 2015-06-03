@@ -11,10 +11,21 @@ public:
 
     Neuron();
 
-    void addWeights(const int & weightId, const int & weightCount);
+    void addWeights(const int & firstWeight,
+                    const int & weightCount);
+
+    void addExternalInputs(const int & firstExternal,
+                           const int & externalCount);
+
+    void addExternalInputs(const int & firstExternal,
+                           const int & step,
+                           const int & lastExternal);
+
+    void debug();
 
 private:
 
+    QVector<int> externalInputsId;
     QVector<int> weightIds;
 
 };

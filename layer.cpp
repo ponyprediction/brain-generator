@@ -1,9 +1,18 @@
 #include "layer.hpp"
 #include "neuron.hpp"
+#include "util.hpp"
 #include <QVector>
 
 
-Layer::Layer()
+Layer::Layer() :
+    Layer(0)
+{
+
+}
+
+
+Layer::Layer(const int & id) :
+    id(id)
 {
 
 }
@@ -11,17 +20,57 @@ Layer::Layer()
 
 void Layer::getNeurons(int & weightId)
 {
-    //
+    // Init
+    Util::write("#" + QString::number(id));
     QVector<Neuron> neurons;
-    int weightCount = 0;
+    int weightPerNeuron = 0;
+    for(int i = 0 ; i < neuronCount ; i++)
+    {
+        neurons.append(Neuron());
+    }
     //
+    if(!id) // first layer
+    {
+        switch (connectionOrganisation)
+        {
+            case GROUP:
+            {
+                int firstExternalId = 0;
+                int externalIdPerNeuron = connectionNumber;
+                for(int i = 0 ; i < neuronCount ; i++)
+                {
+                    neurons[i].addExternalInputs(firstExternalId,
+                                                 externalIdPerNeuron);
+                    firstExternalId += externalIdPerNeuron;
+                }
+                break;
+            }
+            case EVERY:
+            {
+                for(int i = 0 ; i < neuronCount ; i++)
+                {
+                    int firstExternal = i % connectionNumber;
+                    int step = connectionNumber;
+                    int lastExternal = inputCount-1;
+                    neurons[i].addExternalInputs(firstExternal, step,
+                                                 lastExternal);
+                    //externalId += externalIdPerNeuron;
+                }
+                break;
+            }
+        }
+    }
+    else
+    {
+    }
+    // Weights
     for(int i = 0 ; i < neuronCount ; i++)
     {
         switch (weightOrganisation)
         {
             case SHARED:
             {
-                weightId -= weightCount;
+                weightId -= weightPerNeuron;
                 break;
             }
             case UNIQUE:
@@ -32,19 +81,19 @@ void Layer::getNeurons(int & weightId)
         switch (connectionOrganisation)
         {
             case GROUP:
-            {
-                weightCount = connectionNumber;
+                weightPerNeuron = connectionNumber;
                 break;
-            }
             case EVERY:
-            {
-                weightCount = inputCount / connectionNumber;
+                weightPerNeuron = inputCount / connectionNumber;
                 break;
-            }
         }
-        neurons.append(Neuron());
-        neurons[i].addWeights(weightId, weightCount);
-        weightId += weightCount;
+        neurons[i].addWeights(weightId, weightPerNeuron);
+        weightId += weightPerNeuron;
+    }
+    //
+    for(int i = 0 ; i < neuronCount ; i++)
+    {
+        neurons[i].debug();
     }
 }
 
