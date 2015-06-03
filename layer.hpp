@@ -15,6 +15,7 @@ public:
     ConnectionOrganisation connectionOrganisation;
     int connectionNumber;
     WeightOrganisation weightOrganisation;
+    int inputCount;
 };
 
 

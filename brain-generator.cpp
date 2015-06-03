@@ -70,6 +70,7 @@ void BrainGenerator::generate(const QString &command)
                         i++;
                         currentLayer = Layer();
                         currentLayer.neuronCount = args[i].toInt(&ok);
+                        currentLayer.inputCount = inputCount;
                         if(!ok)
                         {
                             writeErrorParsing(args, i);
@@ -144,6 +145,7 @@ void BrainGenerator::generate(const QString &command)
                         i++;
                         currentLayer = Layer();
                         currentLayer.neuronCount = args[i].toInt(&ok);
+                        currentLayer.inputCount = layers.last().neuronCount;
                         if(!ok)
                         {
                             writeErrorParsing(args, i);
