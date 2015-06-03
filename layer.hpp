@@ -9,13 +9,17 @@ public:
 
     enum ConnectionOrganisation{EVERY, GROUP};
     enum WeightOrganisation{UNIQUE, SHARED};
+
     Layer();
+
+    void getNeurons(int & weightId);
 
     int neuronCount;
     ConnectionOrganisation connectionOrganisation;
     int connectionNumber;
     WeightOrganisation weightOrganisation;
     int inputCount;
+
 };
 
 

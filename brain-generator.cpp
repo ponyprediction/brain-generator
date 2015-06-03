@@ -1,6 +1,7 @@
 #include "brain-generator.hpp"
 #include "layer.hpp"
 #include "util.hpp"
+#include "neuron.hpp"
 #include <QJsonObject>
 #include <QFileInfo>
 #include <QJsonDocument>
@@ -90,7 +91,6 @@ void BrainGenerator::generate(const QString &command)
                     if(args[i] == acceptedArgs[EVERY]
                             || args[i] == acceptedArgs[GROUP])
                     {
-                        i++;
                         if(args[i] == acceptedArgs[EVERY] )
                         {
                             currentLayer.connectionOrganisation = Layer::EVERY;
@@ -99,6 +99,7 @@ void BrainGenerator::generate(const QString &command)
                         {
                             currentLayer.connectionOrganisation = Layer::GROUP;
                         }
+                        i++;
                         currentLayer.connectionNumber = args[i].toInt(&ok);
                         if(!ok)
                         {
@@ -240,6 +241,11 @@ void BrainGenerator::generate(const QString &command)
     if(ok)
     {
         // add neurons + weights
+
+        int weightId = 0;
+        layers[0].getNeurons(weightId);
+        layers[1].getNeurons(weightId);
+        layers[2].getNeurons(weightId);
     }
     //
     if(ok)
