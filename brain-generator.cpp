@@ -22,6 +22,7 @@ void BrainGenerator::generate(const QString &command)
     int inputCount = 0;
     QVector<Layer> layers;
     OutType outType;
+    int weightCount = 0;
     // Define the difereent accepted commands
     QStringList acceptedArgs;
     enum AcceptedArg{EVERY=0, IN, GROUP, LAYER, OUT,
@@ -205,22 +206,6 @@ void BrainGenerator::generate(const QString &command)
         }
     }
     //
-    /*
-<ratio>0.21844</ratio>
-    <neuronCount>60</neuronCount>
-    <inputCount>80</inputCount>
-    <outputCount>20</outputCount>
-    <weightCount>804</weightCount>
-<weights></weights>
-    <neurons>
-        <neuron>
-            <externalInputIds>0;1;2;3</externalInputIds>
-            <neuronalInputIds></neuronalInputIds>
-            <brainalInputIds></brainalInputIds>
-            <weightIds>0;1;2;3</weightIds>
-        </neuron>
-
-        */
     if(ok)
     {
         // neuronCount
@@ -273,7 +258,7 @@ void BrainGenerator::generate(const QString &command)
     // Weight count
     if(ok)
     {
-        int weightCount = 0;
+
         for(int i = 0 ; i < layers.size() ; i++)
         {
             if(weightCount < layers[i].getHigherWeightId())
@@ -283,6 +268,18 @@ void BrainGenerator::generate(const QString &command)
         }
         weightCount += 1;
         brain["weightCount"] = weightCount;
+    }
+    // Weights
+    if(ok)
+    {
+        QString weights;
+        for(int i = 0 ; i < weightCount ; i++)
+        {
+            if(i)
+                weights += ";";
+            weights += "0.0";
+        }
+        brain["weights"] = weights;
     }
     //
     if(ok)
