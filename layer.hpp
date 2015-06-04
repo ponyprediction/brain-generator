@@ -25,6 +25,8 @@ public:
 
     QJsonObject getNeurons(int id);
 
+    int getHigherWeightId();
+
     int neuronCount;
     ConnectionOrganisation connectionOrganisation;
     int connectionNumber;

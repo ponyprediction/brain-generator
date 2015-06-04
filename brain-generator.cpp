@@ -270,6 +270,20 @@ void BrainGenerator::generate(const QString &command)
         }
         brain["neurons"] = neurons;
     }
+    // Weight count
+    if(ok)
+    {
+        int weightCount = 0;
+        for(int i = 0 ; i < layers.size() ; i++)
+        {
+            if(weightCount < layers[i].getHigherWeightId())
+            {
+                weightCount = layers[i].getHigherWeightId();
+            }
+        }
+        weightCount += 1;
+        brain["weightCount"] = weightCount;
+    }
     //
     if(ok)
     {

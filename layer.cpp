@@ -31,6 +31,20 @@ QJsonObject Layer::getNeurons(int id)
 }
 
 
+int Layer::getHigherWeightId()
+{
+    int high = 0;
+    for(int i = 0 ; i < neurons.size() ; i++)
+    {
+        if(high < neurons[i].getHigherWeightId())
+        {
+            high = neurons[i].getHigherWeightId();
+        }
+    }
+    return high;
+}
+
+
 void Layer::setWeights(int & weightId)
 {
     //

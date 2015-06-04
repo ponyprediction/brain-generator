@@ -26,6 +26,8 @@ public:
     QString getExternals();
     QString getWeights();
 
+    int getHigherWeightId();
+
 private:
 
     QVector<int> externalInputsId;

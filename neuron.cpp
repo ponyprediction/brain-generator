@@ -75,3 +75,17 @@ QString Neuron::getWeights()
     }
     return tmp;
 }
+
+
+int Neuron::getHigherWeightId()
+{
+    int high = 0;
+    for(int i = 0 ; i < weightIds.size() ; i++)
+    {
+        if(high < weightIds[i])
+        {
+            high = weightIds[i];
+        }
+    }
+    return high;
+}
