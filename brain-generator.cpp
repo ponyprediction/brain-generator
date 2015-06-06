@@ -287,9 +287,9 @@ void BrainGenerator::generate(const QString &command)
     if(ok)
     {
         filename = Util::getLineFromConf("brainFilename", &ok);
-        filename.replace("NAME", "test");
+        filename.replace("NAME", "0");
     }
-    // Open up JSON ..
+    // Open up JSON
     if(ok)
     {
         file.setFileName(filename);

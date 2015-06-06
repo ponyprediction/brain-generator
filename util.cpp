@@ -41,7 +41,7 @@ void Util::init()
     //
     if(ok)
     {
-        paths << Util::getLineFromConf("pathToPonyPrediction", &ok) + "/brains";
+        paths << Util::getLineFromConf("pathToBrains", &ok);
     }
     //
     if(ok)
