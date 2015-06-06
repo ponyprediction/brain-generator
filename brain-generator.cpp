@@ -276,7 +276,9 @@ void BrainGenerator::generate(const QString &command)
         for(int i = 0 ; i < weightCount ; i++)
         {
             if(i)
+            {
                 weights += ";";
+            }
             weights += "0.0";
         }
         brain["weights"] = weights;
@@ -285,7 +287,7 @@ void BrainGenerator::generate(const QString &command)
     if(ok)
     {
         filename = Util::getLineFromConf("brainFilename", &ok);
-        filename.replace("NAME", "bob");
+        filename.replace("NAME", "test");
     }
     // Open up JSON ..
     if(ok)

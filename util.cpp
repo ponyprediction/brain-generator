@@ -16,6 +16,8 @@ bool Util::errorEnabled = true;
 bool Util::errorOverwriteEnabled = true;
 bool Util::isOverwriting = false;
 
+QString Util::confFileName = "./brain-generator.conf";
+
 
 void Util::init()
 {
@@ -65,7 +67,7 @@ void Util::init()
 QString Util::getLineFromConf(const QString & id, bool * ok)
 {
     QString output = "";
-    QFile file("./conf.xml");
+    QFile file(confFileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         Util::writeError("can not find the conf file "

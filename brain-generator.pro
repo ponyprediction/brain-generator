@@ -30,4 +30,4 @@ HEADERS += \
     neuron.hpp
 
 DISTFILES += \
-    conf.xml
+    brain-generator.conf

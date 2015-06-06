@@ -63,6 +63,8 @@ private:
 
     static bool isOverwriting;
 
+    static QString confFileName;
+
 };
 
 
