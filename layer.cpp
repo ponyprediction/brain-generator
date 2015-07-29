@@ -67,10 +67,10 @@ void Layer::setWeights(int & weightId)
         switch (connectionOrganisation)
         {
             case GROUP:
-                weightPerNeuron = connectionNumber;
+                weightPerNeuron = connectionNumber + 1; // +1 for the bias
                 break;
             case EVERY:
-                weightPerNeuron = inputCount / connectionNumber;
+                weightPerNeuron = inputCount / connectionNumber + 1;
                 break;
         }
         neurons[i].addWeights(weightId, weightPerNeuron);
