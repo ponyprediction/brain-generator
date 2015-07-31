@@ -17,6 +17,7 @@ void BrainGenerator::generate(const QString &command)
     bool ok = true;
     QFile file;
     QString filename;
+    QString name = "";
     QJsonObject brain;
     brain["ratio"] = 0.0;
     int inputCount = 0;
@@ -50,6 +51,7 @@ void BrainGenerator::generate(const QString &command)
                     {
                         i++;
                         inputCount = args[i].toInt(&ok);
+                        name += QString::number(inputCount);
                         if(!ok)
                         {
                             Util::writeError("not a number after argument "
@@ -72,6 +74,7 @@ void BrainGenerator::generate(const QString &command)
                         i++;
                         currentLayer = Layer();
                         currentLayer.neuronCount = args[i].toInt(&ok);
+                        name += "-" + QString::number(args[i].toInt(&ok));
                         currentLayer.inputCount = inputCount;
                         if(!ok)
                         {
@@ -95,13 +98,16 @@ void BrainGenerator::generate(const QString &command)
                         if(args[i] == acceptedArgs[EVERY] )
                         {
                             currentLayer.connectionOrganisation = Layer::EVERY;
+                            name += "e";
                         }
                         else if(args[i] == acceptedArgs[GROUP])
                         {
                             currentLayer.connectionOrganisation = Layer::GROUP;
+                            name += "g";
                         }
                         i++;
                         currentLayer.connectionNumber = args[i].toInt(&ok);
+                         name += QString::number(args[i].toInt(&ok));
                         if(!ok)
                         {
                             writeErrorParsing(args, i);
@@ -121,13 +127,16 @@ void BrainGenerator::generate(const QString &command)
                     if(args[i] == acceptedArgs[UNIQUE]
                             || args[i] == acceptedArgs[SHARED])
                     {
+
                         if(args[i] == acceptedArgs[UNIQUE] )
                         {
                             currentLayer.weightOrganisation = Layer::UNIQUE;
+                            name += "u";
                         }
                         else if(args[i] == acceptedArgs[SHARED])
                         {
                             currentLayer.weightOrganisation = Layer::SHARED;
+                            name += "s";
                         }
                         state = State::LAYER_OR_OUT;
                     }
@@ -147,6 +156,7 @@ void BrainGenerator::generate(const QString &command)
                         i++;
                         currentLayer = Layer();
                         currentLayer.neuronCount = args[i].toInt(&ok);
+                        name += "-" + QString::number(args[i].toInt(&ok));
                         currentLayer.inputCount = layers.last().neuronCount;
                         if(!ok)
                         {
@@ -279,7 +289,7 @@ void BrainGenerator::generate(const QString &command)
             {
                 weights += ";";
             }
-            weights += "0.0";
+            weights += QString::number(Util::getRandomFloat(-1.0, 1.0), 'f', 6);
         }
         brain["weights"] = weights;
     }
@@ -287,7 +297,7 @@ void BrainGenerator::generate(const QString &command)
     if(ok)
     {
         filename = Util::getLineFromConf("brainFilename", &ok);
-        filename.replace("NAME", "0");
+        filename.replace("NAME", name);
     }
     // Open up JSON
     if(ok)

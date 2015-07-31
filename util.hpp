@@ -50,6 +50,9 @@ public:
     static void overwriteWarning(const QString & message);
     static void overwriteError(const QString & message);
 
+    static float getRandomFloat(const float & min, const float & max);
+    static int getRandomInt(const int & min, const int & max);
+
 private:
 
     static bool writeEnabled;
