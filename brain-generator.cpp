@@ -289,7 +289,8 @@ void BrainGenerator::generate(const QString &command)
             {
                 weights += ";";
             }
-            weights += QString::number(Util::getRandomFloat(-1.0, 1.0), 'f', 6);
+            weights += "0";
+            //weights += QString::number(Util::getRandomFloat(-1.0, 1.0), 'f', 6);
         }
         brain["weights"] = weights;
     }
